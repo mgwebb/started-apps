@@ -5,7 +5,9 @@ This is a Cloud Foundry CLI plugin to allow easier identification of started app
 <B>Build</B>
 
 $ glide up
+
 $ glide install
+
 $ go build
 
 
@@ -17,8 +19,12 @@ cf install-plugin started-apps
 <B>Usage</B>
 
 $ cf started-apps
+
  or
+ 
 $ cf sa
 
+
 To only show started apps
+
 $ cf sa -x
