@@ -2,17 +2,19 @@
 
 This is a Cloud Foundry CLI plugin to allow easier identification of started apps compared to the standard 'cf apps' command.
 
-Build
+<B>Build</B>
 
-glide build
+$ glide up
+$ glide install
+$ go build
 
 
-Run
+<B>Run</B>
 
 cf install-plugin started-apps
 
 
-Usage
+<B>Usage</B>
 
 $ cf started-apps
  or
