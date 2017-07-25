@@ -101,7 +101,7 @@ func RetrieveApps(apps []plugin_models.GetAppsModel, all bool) (appInfo []AppInf
 			routes := app.Routes
 			u := []string{}
 			for _, r := range routes {
-				u = append(u, r.Host+r.Domain.Name)
+				u = append(u, r.Host+"."+r.Domain.Name)
 			}
 			inst := strconv.Itoa(app.RunningInstances) + "/" + strconv.Itoa(app.TotalInstances)
 			a := AppInfo{Name: app.Name, Instances: inst, Memory: ConvertSize(app.Memory), Disk: ConvertSize(app.DiskQuota), Urls: strings.Join(u, ", "), State: app.State}
