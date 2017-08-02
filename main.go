@@ -41,30 +41,39 @@ func (c *FilterApps) Run(cliConnection plugin.CliConnection, args []string) {
 	c.UI = ui
 	var apps []plugin_models.GetAppsModel
 	all := true
-	if len(args) == 1 || len(args) == 2 {
-		if len(args) == 2 && args[1] == "-x" {
-			all = false
-		}
-		username, _ := c.Connection.Username()
-		var org, space string
-		var err error
-		var currentOrg plugin_models.Organization
-		var currentSpace plugin_models.Space
-		currentOrg, err = c.Connection.GetCurrentOrg()
-		if err == nil {
-			org = currentOrg.OrganizationFields.Name
-		}
-		currentSpace, err = c.Connection.GetCurrentSpace()
-		if err == nil {
-			space = currentSpace.Name
-		}
-		c.UI.Say("\nGetting apps in org " + terminal.PromptColor(org) + " / space " + terminal.PromptColor(space) + " as " + terminal.PromptColor(username) + "...")
 
-		apps, err = c.Connection.GetApps()
-	} else if len(args) > 2 {
-		c.UI.Say("\nError - for proper usage check '" + terminal.PromptColor("cf started-apps -h") + "'\n")
+	/* check for proper usage */
+	if len(args) > 2 ||
+		(len(args) == 2 && args[1] != "-x") {
+		c.UI.Say(terminal.FailureColor("\nError - invalid usage.\n"))
+		_, err := cliConnection.CliCommand("help", "started-apps")
+		if err != nil {
+			c.UI.Say(err.Error())
+			return
+		}
 		return
 	}
+
+	/* check for excluded flag */
+	if len(args) == 2 && args[1] == "-x" {
+		all = false
+	}
+
+	username, _ := c.Connection.Username()
+	var org, space string
+	var currentOrg plugin_models.Organization
+	var currentSpace plugin_models.Space
+	currentOrg, err = c.Connection.GetCurrentOrg()
+	if err == nil {
+		org = currentOrg.OrganizationFields.Name
+	}
+	currentSpace, err = c.Connection.GetCurrentSpace()
+	if err == nil {
+		space = currentSpace.Name
+	}
+	c.UI.Say("\nGetting apps in org " + terminal.PromptColor(org) + " / space " + terminal.PromptColor(space) + " as " + terminal.PromptColor(username) + "...")
+
+	apps, err = c.Connection.GetApps()
 
 	if err != nil {
 		return
