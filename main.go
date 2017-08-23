@@ -44,7 +44,7 @@ func (c *FilterApps) Run(cliConnection plugin.CliConnection, args []string) {
 
 	/* check for proper usage */
 	if len(args) > 2 ||
-		(len(args) == 2 && args[1] != "-x") {
+		(len(args) == 2 && args[1] != "-a") {
 		c.UI.Say(terminal.FailureColor("\nError - invalid usage.\n"))
 		_, err := cliConnection.CliCommand("help", "started-apps")
 		if err != nil {
@@ -54,8 +54,10 @@ func (c *FilterApps) Run(cliConnection plugin.CliConnection, args []string) {
 		return
 	}
 
-	/* check for excluded flag */
-	if len(args) == 2 && args[1] == "-x" {
+	/* check for all flag */
+	if len(args) == 2 && args[1] == "-a" {
+		all = true
+	} else {
 		all = false
 	}
 
@@ -86,8 +88,7 @@ func (c *FilterApps) Run(cliConnection plugin.CliConnection, args []string) {
 	if len(appInfo) > 0 {
 		table := c.UI.Table([]string{"name", "requested state", "instances", "memory", "disk", "urls"})
 		for _, app := range appInfo {
-			if (all == true && app.State == "started") ||
-				(all == false) {
+			if app.State == "started" {
 				table.Add(app.Name, app.State, app.Instances, app.Memory, app.Disk, app.Urls)
 			} else {
 				table.Add(terminal.FailureColor(app.Name), terminal.FailureColor(app.State),
@@ -143,11 +144,11 @@ func (c *FilterApps) GetMetadata() plugin.PluginMetadata {
 			{
 				Name:     "started-apps",
 				Alias:    "sa",
-				HelpText: "List all apps in the target space and allow easier identification of started apps",
+				HelpText: "List started apps in the target space",
 				UsageDetails: plugin.Usage{
 					Usage: "cf started-apps",
 					Options: map[string]string{
-						"x": "Exclude stopped apps",
+						"a": "Include stopped apps",
 					},
 				},
 			},
