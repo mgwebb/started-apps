@@ -11,7 +11,7 @@ Now here's what 'cf sa' looks like.  You'll only get the started apps!
 ![](screenshots/new.png?raw=true)
 
 
-If you want to see all apps, but still easily tell which are actually started use 'cf sa -x'.
+If you want to see all apps, but still easily tell which are actually started use 'cf sa -a'.
 ![](screenshots/new_show_all.png?raw=true)
 
 
