@@ -79,6 +79,8 @@ func (c *FilterApps) Run(cliConnection plugin.CliConnection, args []string) {
 	apps, err = c.Connection.GetApps()
 
 	if err != nil {
+		c.UI.Say(terminal.FailureColor("FAILED"))
+		c.UI.Say(err.Error())
 		return
 	}
 
