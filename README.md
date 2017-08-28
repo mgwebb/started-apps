@@ -1,6 +1,6 @@
 # started-apps
 
-This is a Cloud Foundry CLI plugin to allow easier identification of started apps compared to the standard 'cf apps' command.  By default all apps will be displayed - the stopped apps will display in a different color so as to allow the started apps to be highlighted.
+This is a Cloud Foundry CLI plugin to allow easier identification of started apps compared to the standard 'cf apps' command.  By default only started apps will be displayed.  Using the optional '-a' parameter you'll see all apps, but the stopped apps will display in a different color so as to allow the started apps to still be easily identified.
 
 
 Here's what a typical 'cf apps' looks like.
@@ -23,7 +23,7 @@ $ go build
 ```
 
 
-## Run
+## Install
 ```
 $ cf install-plugin started-apps
 ```
@@ -38,7 +38,7 @@ $ cf started-apps
 $ cf sa
 ```
 
-To only show started apps
+To show all apps but with stopped apps in a different color use
 ```
-$ cf sa -x
+$ cf sa -a
 ```
