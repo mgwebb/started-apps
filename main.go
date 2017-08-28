@@ -14,6 +14,7 @@ import (
 
 //	"github.com/cloudfoundry/cli/plugin/models"
 
+// AppInfo is a struct representing the output seen on screen.
 type AppInfo struct {
 	Name      string
 	Instances string
@@ -23,11 +24,13 @@ type AppInfo struct {
 	State     string
 }
 
+// FilterApps represents this application.
 type FilterApps struct {
 	Connection plugin.CliConnection
 	UI         terminal.UI
 }
 
+// Run is the main method.
 func (c *FilterApps) Run(cliConnection plugin.CliConnection, args []string) {
 	c.Connection = cliConnection
 	var err error
@@ -44,7 +47,7 @@ func (c *FilterApps) Run(cliConnection plugin.CliConnection, args []string) {
 
 	/* check for proper usage */
 	if len(args) > 2 ||
-		(len(args) == 2 && args[1] != "-a") {
+		(len(args) == 2 && args[1] != "-x") {
 		c.UI.Say(terminal.FailureColor("\nError - invalid usage.\n"))
 		_, err := cliConnection.CliCommand("help", "started-apps")
 		if err != nil {
@@ -54,10 +57,8 @@ func (c *FilterApps) Run(cliConnection plugin.CliConnection, args []string) {
 		return
 	}
 
-	/* check for all flag */
-	if len(args) == 2 && args[1] == "-a" {
-		all = true
-	} else {
+	/* check for excluded flag */
+	if len(args) == 2 && args[1] == "-x" {
 		all = false
 	}
 
@@ -88,7 +89,8 @@ func (c *FilterApps) Run(cliConnection plugin.CliConnection, args []string) {
 	if len(appInfo) > 0 {
 		table := c.UI.Table([]string{"name", "requested state", "instances", "memory", "disk", "urls"})
 		for _, app := range appInfo {
-			if app.State == "started" {
+			if (all == true && app.State == "started") ||
+				(all == false) {
 				table.Add(app.Name, app.State, app.Instances, app.Memory, app.Disk, app.Urls)
 			} else {
 				table.Add(terminal.FailureColor(app.Name), terminal.FailureColor(app.State),
@@ -104,6 +106,7 @@ func (c *FilterApps) Run(cliConnection plugin.CliConnection, args []string) {
 	}
 }
 
+// RetrieveApps function iterates through the results of the GetApps() function and creates a AppInfo array.
 func RetrieveApps(apps []plugin_models.GetAppsModel, all bool) (appInfo []AppInfo) {
 	appInfo = make([]AppInfo, 0, 50)
 	for _, app := range apps {
@@ -121,6 +124,7 @@ func RetrieveApps(apps []plugin_models.GetAppsModel, all bool) (appInfo []AppInf
 	return appInfo
 }
 
+// ConvertSize will properly format the size value in Megabytes or Gigabytes.
 func ConvertSize(size int64) (formattedSize string) {
 	var val string
 	if size < 1024 {
@@ -132,6 +136,7 @@ func ConvertSize(size int64) (formattedSize string) {
 	return val
 }
 
+// GetMetadata function is required for cli plugin.
 func (c *FilterApps) GetMetadata() plugin.PluginMetadata {
 	return plugin.PluginMetadata{
 		Name: "started-apps",
@@ -144,11 +149,11 @@ func (c *FilterApps) GetMetadata() plugin.PluginMetadata {
 			{
 				Name:     "started-apps",
 				Alias:    "sa",
-				HelpText: "List started apps in the target space",
+				HelpText: "List all apps in the target space and allow easier identification of started apps",
 				UsageDetails: plugin.Usage{
 					Usage: "cf started-apps",
 					Options: map[string]string{
-						"a": "Include stopped apps",
+						"x": "Exclude stopped apps",
 					},
 				},
 			},

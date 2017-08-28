@@ -1,8 +1,8 @@
 package main
 
 import (
-        "testing"
-       )
+	"testing"
+)
 
 func TestConvertSizeG(t *testing.T) {
 	actualResult := ConvertSize(2048)
