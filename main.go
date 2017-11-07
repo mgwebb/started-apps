@@ -146,7 +146,7 @@ func (c *FilterApps) GetMetadata() plugin.PluginMetadata {
 		Version: plugin.VersionType{
 			Major: 0,
 			Minor: 1,
-			Build: 1,
+			Build: 2,
 		},
 		Commands: []plugin.Command{
 			{
