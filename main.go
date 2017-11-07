@@ -47,7 +47,7 @@ func (c *FilterApps) Run(cliConnection plugin.CliConnection, args []string) {
 
 	/* check for proper usage */
 	if len(args) > 2 ||
-		(len(args) == 2 && args[1] != "-x") {
+		(len(args) == 2 && args[1] != "-a") {
 		c.UI.Say(terminal.FailureColor("\nError - invalid usage.\n"))
 		_, err := cliConnection.CliCommand("help", "started-apps")
 		if err != nil {
@@ -58,7 +58,9 @@ func (c *FilterApps) Run(cliConnection plugin.CliConnection, args []string) {
 	}
 
 	/* check for excluded flag */
-	if len(args) == 2 && args[1] == "-x" {
+	if len(args) == 2 && args[1] == "-a" {
+		all = true
+	} else {
 		all = false
 	}
 
@@ -79,6 +81,8 @@ func (c *FilterApps) Run(cliConnection plugin.CliConnection, args []string) {
 	apps, err = c.Connection.GetApps()
 
 	if err != nil {
+		c.UI.Say(terminal.FailureColor("FAILED"))
+		c.UI.Say(err.Error())
 		return
 	}
 
@@ -89,8 +93,7 @@ func (c *FilterApps) Run(cliConnection plugin.CliConnection, args []string) {
 	if len(appInfo) > 0 {
 		table := c.UI.Table([]string{"name", "requested state", "instances", "memory", "disk", "urls"})
 		for _, app := range appInfo {
-			if (all == true && app.State == "started") ||
-				(all == false) {
+			if app.State == "started" {
 				table.Add(app.Name, app.State, app.Instances, app.Memory, app.Disk, app.Urls)
 			} else {
 				table.Add(terminal.FailureColor(app.Name), terminal.FailureColor(app.State),
@@ -106,7 +109,7 @@ func (c *FilterApps) Run(cliConnection plugin.CliConnection, args []string) {
 	}
 }
 
-// RetrieveApps function iterates through the results of the GetApps() function and creates a AppInfo array.
+// RetrieveApps function iterates through the results of the GetApps() function and creates an AppInfo array.
 func RetrieveApps(apps []plugin_models.GetAppsModel, all bool) (appInfo []AppInfo) {
 	appInfo = make([]AppInfo, 0, 50)
 	for _, app := range apps {
@@ -143,17 +146,17 @@ func (c *FilterApps) GetMetadata() plugin.PluginMetadata {
 		Version: plugin.VersionType{
 			Major: 0,
 			Minor: 1,
-			Build: 0,
+			Build: 1,
 		},
 		Commands: []plugin.Command{
 			{
 				Name:     "started-apps",
 				Alias:    "sa",
-				HelpText: "List all apps in the target space and allow easier identification of started apps",
+				HelpText: "List started apps in the target space",
 				UsageDetails: plugin.Usage{
 					Usage: "cf started-apps",
 					Options: map[string]string{
-						"x": "Exclude stopped apps",
+						"a": "Include stopped apps",
 					},
 				},
 			},
