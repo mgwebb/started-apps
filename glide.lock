@@ -1,8 +1,8 @@
 hash: d9459b2897eadd6a1fc3969b0a9ce84f4fbff40e4dce3fd7d3766a04429a46ee
-updated: 2017-07-14T13:33:47.012219819-06:00
+updated: 2017-11-02T11:37:37.744012131-06:00
 imports:
 - name: code.cloudfoundry.org/cli
-  version: 9494eef0c685481d61e79b6ba9bf26b6dfd69eac
+  version: a969fab64aea8206f5b33e62405eeb6d8ad03cba
   subpackages:
   - cf
   - cf/configuration
@@ -10,39 +10,59 @@ imports:
   - cf/formatters
   - cf/i18n
   - cf/models
-  - cf/resources
   - cf/terminal
   - cf/trace
+  - command/translatableerror
+  - i18n/resources
   - plugin/models
+  - types
+  - util
+  - util/configv3
+  - util/ui
+  - version
 - name: github.com/blang/semver
-  version: 60ec3488bfea7cca02b021d106d9911120d25fe9
+  version: 4a1e882c79dcf4ec00d2e29fac74b9c8938d5052
   repo: https://github.com/blang/semver
+- name: github.com/cloudfoundry/bytefmt
+  version: f4415fafc5619dd75599a54a7c91fb3948ad58bd
+  repo: https://github.com/cloudfoundry/bytefmt
 - name: github.com/cloudfoundry/cli
-  version: 9494eef0c685481d61e79b6ba9bf26b6dfd69eac
+  version: a969fab64aea8206f5b33e62405eeb6d8ad03cba
   subpackages:
   - cf/terminal
   - cf/trace
   - plugin
   - plugin_models
 - name: github.com/fatih/color
-  version: 533cd7fd8a85905f67a1753afb4deddc85ea174f
+  version: 42c364ba490082e4815b5222728711b3440603eb
   repo: https://github.com/fatih/color
+- name: github.com/lunixbochs/vtclean
+  version: 4428d67a89b36ecae7998e983e5814d0d9c45a04
+  repo: https://github.com/lunixbochs/vtclean
 - name: github.com/mattn/go-colorable
-  version: bc69d6cebca8dd5675346a34a1c545b67dc74d5e
+  version: d228849504861217f796da67fae4f6e347643f15
   repo: https://github.com/mattn/go-colorable
 - name: github.com/mattn/go-isatty
-  version: 56b76bdf51f7708750eac80fa38b952bb9f32639
+  version: 30a891c33c7cde7b02a981314b4228ec99380cca
   repo: https://github.com/mattn/go-isatty
-- name: github.com/nicksnyder/go-i18n
-  version: 37e5c2de3e03e4b82693e3fcb4a6aa2cc4eb07e3
-  repo: https://github.com/nicksnyder/go-i18n
+- name: github.com/mattn/go-runewidth
+  version: 14207d285c6c197daabb5c9793d63e7af9ab2d50
+  repo: https://github.com/mattn/go-runewidth
+- name: github.com/SermoDigital/jose
+  version: 2bd9b81ac51d6d6134fcd4fd846bd2e7347a15f9
+  repo: https://github.com/SermoDigital/jose
   subpackages:
-  - i18n
-  - i18n/bundle
-  - i18n/language
-  - i18n/translation
+  - crypto
+  - jws
+  - jwt
+- name: github.com/vito/go-interact
+  version: c5a3f51ad50e34ec101050f69383caa75082f233
+  repo: https://github.com/vito/go-interact
+  subpackages:
+  - interact
+  - interact/terminal
 - name: golang.org/x/crypto
-  version: 911fafb28f4ee7c7bd483539a6c96190bbbccc3f
+  version: 81e90905daefcd6fd217b62423c0908922eadb30
   repo: https://go.googlesource.com/crypto
   subpackages:
   - curve25519
@@ -50,11 +70,21 @@ imports:
   - ssh
   - ssh/terminal
 - name: golang.org/x/sys
-  version: a646d33e2ee3172a661fc09bca23bb4889a41bc8
+  version: 7ddbeae9ae08c6a06a59597f0c9edbc5ff2444ce
   repo: https://go.googlesource.com/sys
   subpackages:
   - unix
-- name: gopkg.in/yaml.v2
-  version: e4d366fc3c7938e2958e662b4258c7a89e1f0e3e
-  repo: https://gopkg.in/yaml.v2
+  - windows
+- name: golang.org/x/text
+  version: bd91bbf73e9a4a801adbfb97133c992678533126
+  repo: https://go.googlesource.com/text
+  subpackages:
+  - encoding
+  - internal/gen
+  - internal/tag
+  - internal/utf8internal
+  - language
+  - runes
+  - transform
+  - unicode/cldr
 testImports: []

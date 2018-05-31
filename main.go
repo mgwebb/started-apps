@@ -251,8 +251,8 @@ func (c *FilterApps) GetMetadata() plugin.PluginMetadata {
 		Name: "started-apps",
 		Version: plugin.VersionType{
 			Major: 0,
-			Minor: 1,
-			Build: 2,
+			Minor: 2,
+			Build: 0,
 		},
 		Commands: []plugin.Command{
 			{
