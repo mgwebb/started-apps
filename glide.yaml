@@ -1,8 +1,0 @@
-package: .
-import:
-- package: github.com/cloudfoundry/cli
-  subpackages:
-  - cf/terminal
-  - cf/trace
-  - plugin
-  - plugin_models
