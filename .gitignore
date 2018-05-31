@@ -1,3 +1,4 @@
 vendor
 started-apps*
 .DS_Store
+.wercker
