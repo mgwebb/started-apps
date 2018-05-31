@@ -15,17 +15,13 @@ If you want to see all apps, but still easily tell which are actually started us
 ![](screenshots/new_show_all.png?raw=true)
 
 
-## Build
-```
-$ glide up
-$ glide install
-$ go build
-```
-
-
 ## Install
+
+Download the appropriate binary from the latest release.
+
+To install for MacOS:
 ```
-$ cf install-plugin started-apps
+$ cf install-plugin started-apps-macos
 ```
 
 
