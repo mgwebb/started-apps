@@ -13,6 +13,7 @@ import (
 )
 
 //	"github.com/cloudfoundry/cli/plugin/models"
+// added comment
 
 // AppInfo is a struct representing the output seen on screen.
 type AppInfo struct {
