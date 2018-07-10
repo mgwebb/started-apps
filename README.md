@@ -14,6 +14,7 @@ Now here's what 'cf sa' looks like.  You'll only get the started apps!
 If you want to see all apps, but still easily tell which are actually started use 'cf sa -a'.
 ![](screenshots/new_show_all.png?raw=true)
 
+## needs update for new org capabilities 
 
 ## Install
 
