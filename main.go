@@ -127,7 +127,11 @@ func PrintApps(appInfo []AppInfo, c *FilterApps, org string, username string, sp
 				c.UI.Say(terminal.SuccessColor("OK\n"))
 			}
 			if app.State == "started" {
-				table.Add(app.Name, app.State, app.Instances, app.Memory, app.Disk, app.Urls)
+				if strings.HasPrefix(app.Instances, "0/") {
+					table.Add(app.Name, terminal.FailureColor(app.State), terminal.FailureColor(app.Instances), app.Memory, app.Disk, app.Urls)
+				} else {
+					table.Add(app.Name, app.State, app.Instances, app.Memory, app.Disk, app.Urls)
+				}
 			} else {
 				table.Add(terminal.FailureColor(app.Name), terminal.FailureColor(app.State),
 					terminal.FailureColor(app.Instances), terminal.FailureColor(app.Memory),
